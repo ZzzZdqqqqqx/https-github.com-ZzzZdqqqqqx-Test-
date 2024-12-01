@@ -1,0 +1,168 @@
+@prefix : <http://example.org/french-legal-institutions#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<http://example.org/french-legal-institutions> rdf:type owl:Ontology ;
+    dc:title "Ontology of French Legal Institutions"@en ;
+    dc:creator "Bolt Assistant" ;
+    dc:description "An ontology representing the legal institutions of France"@en ;
+    owl:versionInfo "1.0" .
+
+# Classes
+
+:LegalInstitution rdf:type owl:Class ;
+    rdfs:label "Legal Institution"@en , "Institution Juridique"@fr ;
+    rdfs:comment "An institution within the French legal system"@en .
+
+# Courts hierarchy
+:Court rdf:type owl:Class ;
+    rdfs:subClassOf :LegalInstitution ;
+    rdfs:label "Court"@en , "Tribunal"@fr .
+
+:ConstitutionalCouncil rdf:type owl:Class ;
+    rdfs:subClassOf :Court ;
+    rdfs:label "Constitutional Council"@en , "Conseil Constitutionnel"@fr .
+
+:CouncilOfState rdf:type owl:Class ;
+    rdfs:subClassOf :Court ;
+    rdfs:label "Council of State"@en , "Conseil d'État"@fr .
+
+:CourtOfCassation rdf:type owl:Class ;
+    rdfs:subClassOf :Court ;
+    rdfs:label "Court of Cassation"@en , "Cour de Cassation"@fr .
+
+:CourtOfAppeal rdf:type owl:Class ;
+    rdfs:subClassOf :Court ;
+    rdfs:label "Court of Appeal"@en , "Cour d'Appel"@fr .
+
+:FirstInstanceCourt rdf:type owl:Class ;
+    rdfs:subClassOf :Court ;
+    rdfs:label "First Instance Court"@en , "Tribunal de Première Instance"@fr .
+
+:CivilCourt rdf:type owl:Class ;
+    rdfs:subClassOf :FirstInstanceCourt ;
+    rdfs:label "Civil Court"@en , "Tribunal Civil"@fr .
+
+:CriminalCourt rdf:type owl:Class ;
+    rdfs:subClassOf :FirstInstanceCourt ;
+    rdfs:label "Criminal Court"@en , "Tribunal Pénal"@fr .
+
+:AdministrativeCourt rdf:type owl:Class ;
+    rdfs:subClassOf :FirstInstanceCourt ;
+    rdfs:label "Administrative Court"@en , "Tribunal Administratif"@fr .
+
+:SpecializedCourt rdf:type owl:Class ;
+    rdfs:subClassOf :Court ;
+    rdfs:label "Specialized Court"@en , "Tribunal Spécialisé"@fr .
+
+:CommercialCourt rdf:type owl:Class ;
+    rdfs:subClassOf :SpecializedCourt ;
+    rdfs:label "Commercial Court"@en , "Tribunal de Commerce"@fr .
+
+:LaborCourt rdf:type owl:Class ;
+    rdfs:subClassOf :SpecializedCourt ;
+    rdfs:label "Labor Court"@en , "Conseil de Prud'hommes"@fr .
+
+# Legal Professionals
+:LegalProfessional rdf:type owl:Class ;
+    rdfs:subClassOf :LegalInstitution ;
+    rdfs:label "Legal Professional"@en , "Professionnel du Droit"@fr .
+
+:Judge rdf:type owl:Class ;
+    rdfs:subClassOf :LegalProfessional ;
+    rdfs:label "Judge"@en , "Juge"@fr .
+
+:Prosecutor rdf:type owl:Class ;
+    rdfs:subClassOf :LegalProfessional ;
+    rdfs:label "Prosecutor"@en , "Procureur"@fr .
+
+:Lawyer rdf:type owl:Class ;
+    rdfs:subClassOf :LegalProfessional ;
+    rdfs:label "Lawyer"@en , "Avocat"@fr .
+
+:Notary rdf:type owl:Class ;
+    rdfs:subClassOf :LegalProfessional ;
+    rdfs:label "Notary"@en , "Notaire"@fr .
+
+:Bailiff rdf:type owl:Class ;
+    rdfs:subClassOf :LegalProfessional ;
+    rdfs:label "Bailiff"@en , "Huissier de Justice"@fr .
+
+# Government Bodies
+:GovernmentBody rdf:type owl:Class ;
+    rdfs:subClassOf :LegalInstitution ;
+    rdfs:label "Government Body"@en , "Organisme Gouvernemental"@fr .
+
+:MinistryOfJustice rdf:type owl:Class ;
+    rdfs:subClassOf :GovernmentBody ;
+    rdfs:label "Ministry of Justice"@en , "Ministère de la Justice"@fr .
+
+:PublicProsecutorsOffice rdf:type owl:Class ;
+    rdfs:subClassOf :GovernmentBody ;
+    rdfs:label "Public Prosecutor's Office"@en , "Parquet"@fr .
+
+# Object Properties
+:hasJurisdictionOver rdf:type owl:ObjectProperty ;
+    rdfs:domain :Court ;
+    rdfs:range :Court ;
+    rdfs:label "has jurisdiction over"@en , "a juridiction sur"@fr .
+
+:appealsTo rdf:type owl:ObjectProperty ;
+    rdfs:domain :Court ;
+    rdfs:range :Court ;
+    rdfs:label "appeals to"@en , "fait appel à"@fr .
+
+:employs rdf:type owl:ObjectProperty ;
+    rdfs:domain :LegalInstitution ;
+    rdfs:range :LegalProfessional ;
+    rdfs:label "employs"@en , "emploie"@fr .
+
+:oversees rdf:type owl:ObjectProperty ;
+    rdfs:domain :GovernmentBody ;
+    rdfs:range :LegalInstitution ;
+    rdfs:label "oversees"@en , "supervise"@fr .
+
+:isPartOf rdf:type owl:ObjectProperty ;
+    rdfs:domain :LegalInstitution ;
+    rdfs:range :LegalInstitution ;
+    rdfs:label "is part of"@en , "fait partie de"@fr .
+
+# Data Properties
+:name rdf:type owl:DatatypeProperty ;
+    rdfs:domain :LegalInstitution ;
+    rdfs:range xsd:string ;
+    rdfs:label "name"@en , "nom"@fr .
+
+:establishedDate rdf:type owl:DatatypeProperty ;
+    rdfs:domain :LegalInstitution ;
+    rdfs:range xsd:date ;
+    rdfs:label "established date"@en , "date d'établissement"@fr .
+
+:location rdf:type owl:DatatypeProperty ;
+    rdfs:domain :LegalInstitution ;
+    rdfs:range xsd:string ;
+    rdfs:label "location"@en , "localisation"@fr .
+
+:address rdf:type owl:DatatypeProperty ;
+    rdfs:domain :LegalInstitution ;
+    rdfs:range xsd:string ;
+    rdfs:label "address"@en , "adresse"@fr .
+
+:website rdf:type owl:DatatypeProperty ;
+    rdfs:domain :LegalInstitution ;
+    rdfs:range xsd:anyURI ;
+    rdfs:label "website"@en , "site web"@fr .
+
+# Sample Individuals
+:ParisCourtOfAppeal rdf:type :CourtOfAppeal ;
+    :name "Paris Court of Appeal"@en , "Cour d'Appel de Paris"@fr ;
+    :location "Paris"@en , "Paris"@fr ;
+    :establishedDate "1790-03-04"^^xsd:date .
+
+:JeanDupont rdf:type :Judge ;
+    :name "Jean Dupont" ;
+    :employs :ParisCourtOfAppeal .
